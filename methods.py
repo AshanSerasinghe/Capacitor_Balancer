@@ -29,19 +29,42 @@ class CapData():
 
         return branch_total
     
-    def swap_R(self , X):
-        temp = {
-            (0,0): [CapData([X.R[0], ])]
-        }
+    def swap_caps(self , X, phase):
+        # temp = {
+        #     (0,0): [CapData([X.R[0], ])]
+        # }
+        # self.R[0] 
+        X = X.cap_dict
+        copy_0_0 = self.cap_dict; copy_0_0[phase][0] = X[phase][0] 
+        copy_0_0_X = X;  copy_0_0_X[phase][0]= self.cap_dict[phase][0]
+        diff_0_0 = self.get_diff(copy_0_0_X)
 
-        self.R[0] 
+        copy_0_1 = self.cap_dict; copy_0_1[phase][0] = X[phase][1] 
+        copy_0_1_X = X;  copy_0_1_X[phase][1]= self.cap_dict[phase][0]
+        diff_0_1 = self.get_diff(copy_0_1_X)
+
+        copy_1_0 = self.cap_dict; copy_1_0[phase][1] = X[phase][0] 
+        copy_1_0_X = X;  copy_1_0_X[phase][0]= self.cap_dict[phase][1]
+        diff_1_0 = self.get_diff(copy_1_0_X)
+
+        copy_1_1 = self.cap_dict; copy_1_1[phase][1] = X[phase][1] 
+        copy_1_1_X = X;  copy_1_1_X[phase][1]= self.cap_dict[phase][1]
+        diff_1_1 = self.get_diff(copy_1_1_X)
+        
+        return [diff_0_0 , diff_0_1, diff_1_0, diff_1_1]
 
 
     def get_diff(self , X):
         return abs(self.calculate_total() - X.calculate_total())
+    
+    # def executer(self):
+    #     X = CapData([12,12.5,12.3 , 12.4,12.5,12.1 ])
 
 
 if __name__ == '__main__':
     x = CapData([12,12.5,12.3 , 12.4,12.5,12.1 ])
+    X =  CapData([12,12.5,12.3 , 12.4,12.5,12.1 ])
+    v = x.swap_caps(X, "R")
+    print(v)
     print(x.calculate_total())
 
