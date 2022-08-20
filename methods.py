@@ -93,15 +93,15 @@ def swap_caps(cap_dict , X, phase):
     # self.R[0] 
 
     copy_0_0 = cap_dict; copy_0_0[phase][0] = X[phase][0] 
-    copy_0_0_X = X;  copy_0_0_X[phase][0]= cap_dict[phase][0]
+    copy_0_0_X = X;  copy_0_0_X[phase][0] = cap_dict[phase][0]
     diff_0_0 = calculate_total(copy_0_0_X) - calculate_total(copy_0_0)
 
     copy_0_1 = cap_dict; copy_0_1[phase][0] = X[phase][1] 
-    copy_0_1_X = X;  copy_0_1_X[phase][1]= cap_dict[phase][0]
+    copy_0_1_X = X;  copy_0_1_X[phase][1] = cap_dict[phase][0]
     diff_0_1 = calculate_total(copy_0_1_X) - calculate_total(copy_0_1)
 
     copy_1_0 = cap_dict; copy_1_0[phase][1] = X[phase][0] 
-    copy_1_0_X = X;  copy_1_0_X[phase][0]= cap_dict[phase][1]
+    copy_1_0_X = X;  copy_1_0_X[phase][0] = cap_dict[phase][1]
     diff_1_0 = calculate_total(copy_1_0_X) - calculate_total(copy_1_0)
 
     copy_1_1 = cap_dict; copy_1_1[phase][1] = X[phase][1] 
