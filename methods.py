@@ -118,18 +118,18 @@ def make_dict(cap_list):
     return cap_dict
 
 
-if __name__ == '__main__':
-    dict1 = make_dict([12,12.5,12.3 , 12.4,12.5,12.1 ])
-    dict2 = make_dict([12,12.5,12.3 , 12.4,12.5,12.1 ])
+# if __name__ == '__main__':
+#     dict1 = make_dict([12,12.5,12.3 , 12.4,12.5,12.1 ])
+#     dict2 = make_dict([12,12.5,12.3 , 12.4,12.5,12.1 ])
 
-    diff_list = swap_caps(dict1 , dict2, "R")
-    print(diff_list)
+#     diff_list = swap_caps(dict1 , dict2, "R")
+#     print(diff_list)
 
-    diff_list = swap_caps(dict1 , dict2, "Y")
-    print(diff_list)
+#     diff_list = swap_caps(dict1 , dict2, "Y")
+#     print(diff_list)
 
-    diff_list = swap_caps(dict1 , dict2, "B")
-    print(diff_list)
+#     diff_list = swap_caps(dict1 , dict2, "B")
+#     print(diff_list)
 
 
 
