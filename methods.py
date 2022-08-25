@@ -94,21 +94,33 @@ def swap_caps(cap_dict , X, phase):
 
     copy_0_0 = cap_dict; copy_0_0[phase][0] = X[phase][0] 
     copy_0_0_X = X;  copy_0_0_X[phase][0] = cap_dict[phase][0]
-    diff_0_0 = calculate_total(copy_0_0_X) - calculate_total(copy_0_0)
+    T1 = calculate_total(copy_0_0_X) 
+    T2 = calculate_total(copy_0_0)
+    diff_0_0 = T1-T2
 
     copy_0_1 = cap_dict; copy_0_1[phase][0] = X[phase][1] 
     copy_0_1_X = X;  copy_0_1_X[phase][1] = cap_dict[phase][0]
-    diff_0_1 = calculate_total(copy_0_1_X) - calculate_total(copy_0_1)
+    T3 = calculate_total(copy_0_1_X)  
+    T4 = calculate_total(copy_0_1)
+    diff_0_1 = T3-T4
 
     copy_1_0 = cap_dict; copy_1_0[phase][1] = X[phase][0] 
     copy_1_0_X = X;  copy_1_0_X[phase][0] = cap_dict[phase][1]
-    diff_1_0 = calculate_total(copy_1_0_X) - calculate_total(copy_1_0)
+    T5 = calculate_total(copy_1_0_X) 
+    T6 = calculate_total(copy_1_0)
+    diff_1_0 = T5-T6
 
     copy_1_1 = cap_dict; copy_1_1[phase][1] = X[phase][1] 
     copy_1_1_X = X;  copy_1_1_X[phase][1]= cap_dict[phase][1]
-    diff_1_1 = calculate_total(copy_1_1_X) - calculate_total(copy_1_1)
+    T7 = calculate_total(copy_1_1_X) 
+    T8 = calculate_total(copy_1_1)
+    diff_1_1
     
-    return [diff_0_0 , diff_0_1, diff_1_0, diff_1_1]
+    res = [[diff_0_0 , diff_0_1, diff_1_0, diff_1_1],\
+        [T2, T4 ,T6, T8],\
+        [T1, T3, T5, T7]]
+    
+    return res
 
 def make_dict(cap_list):
     cap_dict = {"R":[cap_list[0], cap_list[1]] ,\

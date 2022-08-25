@@ -1,7 +1,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from methods import swap_caps
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -499,8 +499,13 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
         #-----------------------------------------------------------------
-        self.pushButton.clicked.connect(self.get_inputData)
-
+        self.GENERATE_COUNTER = 0
+        self.ORIGINAL_INPUT = {}
+        self.pushButton.clicked.connect(self.calculate_best_swap)
+        self.actionRestore_Original.triggered.connect(self.reset_to_origial)
+        #-----------------------------------------------------------------
+        
+        
     def get_inputData(self):
         original_data_dict = {'A':[self.lineEdit.text() , self.lineEdit_2.text()] , 'B':[self.lineEdit_3.text() , self.lineEdit_4.text()],
         'C':[self.lineEdit_5.text() , self.lineEdit_6.text()],
@@ -562,14 +567,147 @@ class Ui_MainWindow(object):
         #___________________________________________________________________
         
         
-        print(arranged_dict)
+        #print(arranged_dict)
         
         return [arranged_dict , arranged_dict_2]
             
     def calculate_best_swap(self):
-        arrangged_dict = get_inputData(self)
         
+        #--------------------------------------------------------------------------    
+        arrangged_dict = self.get_inputData()
+        if self.GENERATE_COUNTER == 0:
+            self.ORIGINAL_INPUT = arrangged_dict # save the input data
+        #-------------------------------------------------------------------------- 
+        
+        rack = self.comboBox_7.currentText()
+        
+        if rack == "First Rack":
+            phase = "R"
+        elif rack == "Second Rack":
+            phase = "Y"
+        elif rack == "Third Rack":
+            phase = "B"
+        
+        #--------------------------------------------------------------------------    
+        swap_diff = swap_caps(arrangged_dict[0] , arrangged_dict[1] , phase)
+        #--------------------------------------------------------------------------    
                 
+        print(swap_diff)
+        diff = 10e50
+        pos = -1
+        for k,ind in zip(swap_diff , [0,1,2,3]):
+            if abs(k) < abs(diff):
+                diff = abs(k) ; pos = ind 
+        
+        if pos == 0:
+            print("0_0")
+            if self.comboBox_7.currentText() == "First Rack" and (float(self.lineEdit.text()) != float(self.lineEdit_7.text())):
+                self.text_swaper( self.label_13, self.label_20, self.lineEdit, self.lineEdit_7 )
+            elif self.comboBox_7.currentText() == "Second Rack" and (float(self.lineEdit_3.text()) != float(self.lineEdit_11.text())):
+                self.text_swaper( self.label_16, self.label_24, self.lineEdit_3, self.lineEdit_11 )
+            elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_8.text()) != float(self.lineEdit_9.text())):
+                self.text_swaper( self.label_18, self.label_22, self.lineEdit_8, self.lineEdit_9 )
+                
+            self.label_28.setText("Difference = " + str( round(swap_diff[pos] , 4) ) )
+                
+        elif pos == 1:
+            print("0_1")
+            if self.comboBox_7.currentText() == "First Rack" and (float(self.lineEdit.text()) != float(self.lineEdit_4.text())):
+                self.text_swaper( self.label_13, self.label_19, self.lineEdit, self.lineEdit_4 )
+            elif self.comboBox_7.currentText() == "Second Rack" and (float(self.lineEdit_3.text()) != float(self.lineEdit_12.text())):
+                self.text_swaper( self.label_16, self.label_23, self.lineEdit_3, self.lineEdit_12 )
+            elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_5.text()) != float(self.lineEdit_10.text())):
+                self.text_swaper( self.label_18, self.label_21, self.lineEdit_5, self.lineEdit_10 )
+            
+            self.label_28.setText("Difference = " + str( round(swap_diff[pos], 4)) )
+          
+        elif pos == 2:
+            print("1_0")
+            if self.comboBox_7.currentText() == "First Rack" and (float(self.lineEdit_2.text()) != float(self.lineEdit_7.text())):
+                self.text_swaper( self.label_14, self.label_20, self.lineEdit_2, self.lineEdit_7 )
+            elif self.comboBox_7.currentText() == "Second Rack" and (float(self.lineEdit_4.text()) != float(self.lineEdit_11.text())):
+                self.text_swaper( self.label_15, self.label_24, self.lineEdit_4, self.lineEdit_11 )
+            elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_6.text()) != float(self.lineEdit_9.text())):
+                self.text_swaper( self.label_17, self.label_22, self.lineEdit_6, self.lineEdit_9 )
+            
+            self.label_28.setText("Difference = " + str(round( swap_diff[pos] , 4) ) )
+            
+        elif pos == 3:
+            print("1_1")
+            if self.comboBox_7.currentText() == "First Rack" and (float(self.lineEdit_2.text()) != float(self.lineEdit_8.text())):
+                self.text_swaper( self.label_14, self.label_19, self.lineEdit_2, self.lineEdit_8 )
+            elif self.comboBox_7.currentText() == "Second Rack"and (float(self.lineEdit_4.text()) != float(self.lineEdit_12.text())):
+                self.text_swaper( self.label_15, self.label_23, self.lineEdit_4, self.lineEdit_12 )
+            elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_6.text()) != float(self.lineEdit_10.text())):
+                self.text_swaper( self.label_17, self.label_21, self.lineEdit_6, self.lineEdit_10 )
+            
+            self.label_28.setText("Difference = " + str( round(swap_diff[pos] , 4) ))
+        
+        # increase the counter
+        self.GENERATE_COUNTER+=1 
+        
+        
+    def text_swaper(self, lable_13, lable_20, lineEdit, lineEdit_7 ):
+        txt1 = lable_20.text()
+        txt2 = lable_13.text()
+        lable_13.setText(txt1); lable_13.setStyleSheet("background-color: lightgreen") #rgb(240, 240, 240)
+        lable_20.setText(txt2); lable_20.setStyleSheet("background-color: lightgreen")
+        
+        c1 = lineEdit.text()
+        c2 = lineEdit_7.text()
+        lineEdit_7.setText( c1 )
+        lineEdit.setText( c2 )
+    
+    def reset_to_origial(self):
+        self.label_13.setStyleSheet("background-color: rgb(240, 240, 240)") #rgb(240, 240, 240)
+        self.label_14.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_15.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_16.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_17.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_18.setStyleSheet("background-color: rgb(240, 240, 240)")
+        
+        self.label_19.setStyleSheet("background-color: rgb(240, 240, 240)") #rgb(240, 240, 240)
+        self.label_20.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_21.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_22.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_23.setStyleSheet("background-color: rgb(240, 240, 240)")
+        self.label_24.setStyleSheet("background-color: rgb(240, 240, 240)")
+        
+        
+        # reset texts
+        self.label_13.setText("C(1,0)")
+        self.label_14.setText("C(1,1)")
+        self.label_15.setText("C(1,3)")
+        self.label_16.setText("C(1,2)")
+        self.label_17.setText("C(1,5)")
+        self.label_18.setText("C(1,4)")
+        
+        self.label_19.setText("C(2,1)")
+        self.label_20.setText("C(2,0)")
+        self.label_21.setText("C(2,5)")
+        self.label_22.setText("C(2,4)")
+        self.label_23.setText("C(2,3)")
+        self.label_24.setText("C(2,2)")
+        
+        R = self.ORIGINAL_INPUT[0]['R']
+        Y = self.ORIGINAL_INPUT[0]['Y']
+        B = self.ORIGINAL_INPUT[0]['B']
+        
+        a = self.ORIGINAL_INPUT[1]['R']
+        b = self.ORIGINAL_INPUT[1]['Y']
+        c = self.ORIGINAL_INPUT[1]['B']
+        
+        
+        self.lineEdit.setText(R[0]); self.lineEdit_2.setText(R[1])
+        self.lineEdit_3.setText(Y[0]); self.lineEdit_4.setText(Y[1]) 
+        self.lineEdit_5.setText(B[0]); self.lineEdit_6.setText(B[1]) 
+        
+        self.lineEdit_7.setText(a[0]); self.lineEdit_8.setText(a[1])
+        self.lineEdit_11.setText(b[0]); self.lineEdit_12.setText(b[1])
+        self.lineEdit_9.setText(c[0]); self.lineEdit_10.setText(c[1])
+         
+         
+        
         
 
     def retranslateUi(self, MainWindow):
