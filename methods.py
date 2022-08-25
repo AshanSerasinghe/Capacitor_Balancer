@@ -114,7 +114,7 @@ def swap_caps(cap_dict , X, phase):
     copy_1_1_X = X;  copy_1_1_X[phase][1]= cap_dict[phase][1]
     T7 = calculate_total(copy_1_1_X) 
     T8 = calculate_total(copy_1_1)
-    diff_1_1
+    diff_1_1 = T7 - T8
     
     res = [[diff_0_0 , diff_0_1, diff_1_0, diff_1_1],\
         [T2, T4 ,T6, T8],\

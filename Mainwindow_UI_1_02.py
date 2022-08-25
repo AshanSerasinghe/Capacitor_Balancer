@@ -589,7 +589,10 @@ class Ui_MainWindow(object):
             phase = "B"
         
         #--------------------------------------------------------------------------    
-        swap_diff = swap_caps(arrangged_dict[0] , arrangged_dict[1] , phase)
+        res = swap_caps(arrangged_dict[0] , arrangged_dict[1] , phase)
+        swap_diff = res[0]
+        Y1 = res[1]
+        Y2 = res[2]
         #--------------------------------------------------------------------------    
                 
         print(swap_diff)
@@ -608,7 +611,10 @@ class Ui_MainWindow(object):
             elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_8.text()) != float(self.lineEdit_9.text())):
                 self.text_swaper( self.label_18, self.label_22, self.lineEdit_8, self.lineEdit_9 )
                 
-            self.label_28.setText("Difference = " + str( round(swap_diff[pos] , 4) ) )
+            self.label_28.setText("Difference = " + str( abs(round(swap_diff[pos] , 4)) ) + ' μF')
+            self.label_26.setText("Total 1 = " + str( round(Y1[pos] , 4) ) + ' μF')
+            self.label_27.setText("Total 2 = " + str( round(Y2[pos] , 4) ) + ' μF')
+            
                 
         elif pos == 1:
             print("0_1")
@@ -619,7 +625,9 @@ class Ui_MainWindow(object):
             elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_5.text()) != float(self.lineEdit_10.text())):
                 self.text_swaper( self.label_18, self.label_21, self.lineEdit_5, self.lineEdit_10 )
             
-            self.label_28.setText("Difference = " + str( round(swap_diff[pos], 4)) )
+            self.label_28.setText("Difference = " + str( abs( round(swap_diff[pos], 4) )) + ' μF')
+            self.label_26.setText("Total 1 = " + str( round(Y1[pos] , 4) ) + ' μF')
+            self.label_27.setText("Total 2 = " + str( round(Y2[pos] , 4) ) + ' μF')
           
         elif pos == 2:
             print("1_0")
@@ -630,7 +638,9 @@ class Ui_MainWindow(object):
             elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_6.text()) != float(self.lineEdit_9.text())):
                 self.text_swaper( self.label_17, self.label_22, self.lineEdit_6, self.lineEdit_9 )
             
-            self.label_28.setText("Difference = " + str(round( swap_diff[pos] , 4) ) )
+            self.label_28.setText("Difference = " + str( abs(round( swap_diff[pos] , 4)) ) + ' μF')
+            self.label_26.setText("Total 1 = " + str( round(Y1[pos] , 4) ) + ' μF')
+            self.label_27.setText("Total 2 = " + str( round(Y2[pos] , 4) ) + ' μF')
             
         elif pos == 3:
             print("1_1")
@@ -641,7 +651,9 @@ class Ui_MainWindow(object):
             elif self.comboBox_7.currentText() == "Third Rack" and (float(self.lineEdit_6.text()) != float(self.lineEdit_10.text())):
                 self.text_swaper( self.label_17, self.label_21, self.lineEdit_6, self.lineEdit_10 )
             
-            self.label_28.setText("Difference = " + str( round(swap_diff[pos] , 4) ))
+            self.label_28.setText("Difference = " + str( abs(round(swap_diff[pos] , 4)) ) + ' μF')
+            self.label_26.setText("Total 1 = " + str( round(Y1[pos] , 4) ) + ' μF')
+            self.label_27.setText("Total 2 = " + str( round(Y2[pos] , 4) ) + ' μF')
         
         # increase the counter
         self.GENERATE_COUNTER+=1 
