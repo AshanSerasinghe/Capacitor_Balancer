@@ -3,7 +3,7 @@
 The resultant capacitance of corresponding arms of Y-connected two capitor banks should be equal to have a zero voltage diffrence at star point. 
 
 <p align="center">
-  <img src="https://github.com/AshanSerasinghe/Capacitor_Balancer/blob/main/readmeImgs/initialWindow.png?raw=true?raw=true" width="500" title="App Logo">
+  <img src="https://github.com/AshanSerasinghe/Capacitor_Balancer/blob/main/readmeImgs/initialWindow.png?raw=true?raw=true"  title="Interface">
 </p>
 
 
